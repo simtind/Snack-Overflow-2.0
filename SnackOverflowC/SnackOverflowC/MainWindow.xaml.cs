@@ -23,10 +23,12 @@ namespace SnackOverflowC
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DatabaseInstance db;
         private Grid activeGrid;
+
         private string barcode;
         private string rfid;
-        private DatabaseInstance db;
+        
 
 
         public MainWindow()

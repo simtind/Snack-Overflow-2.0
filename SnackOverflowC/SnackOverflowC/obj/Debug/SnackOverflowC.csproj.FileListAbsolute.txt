@@ -14,3 +14,19 @@ C:\Users\Jakob Lover\documents\visual studio 2015\Projects\SnackOverflowC\SnackO
 C:\Users\Jakob Lover\documents\visual studio 2015\Projects\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.csprojResolveAssemblyReference.cache
 C:\Users\Jakob Lover\documents\visual studio 2015\Projects\SnackOverflowC\SnackOverflowC\bin\Debug\Npgsql.dll
 C:\Users\Jakob Lover\documents\visual studio 2015\Projects\SnackOverflowC\SnackOverflowC\bin\Debug\Npgsql.xml
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\bin\Debug\SnackOverflowC.exe.config
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.exe
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.pdb
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\bin\Debug\SnackOverflowC.exe
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\bin\Debug\SnackOverflowC.pdb
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\bin\Debug\Npgsql.dll
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\bin\Debug\Npgsql.xml
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.csprojResolveAssemblyReference.cache
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\MainWindow.g.cs
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\App.g.cs
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC_MarkupCompile.cache
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC_MarkupCompile.lref
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\MainWindow.baml
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.g.resources
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.Properties.Resources.resources
+C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.csproj.GenerateResource.Cache
