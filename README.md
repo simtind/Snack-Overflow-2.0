@@ -1,1 +1,6 @@
-Snack-Overflow-2.0
+Setup:
+
+Install npgsql
+-------------------------
+Tools -> NuGet Package Manager -> Package Manager Console
+Run command "Install-Package Npgsql"
