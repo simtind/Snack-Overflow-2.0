@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Snack Overflow" Height="720" Width="1080">
     <Grid x:Name="grid_main">
-        <Grid x:Name="grid_idle">
+        <Grid x:Name="grid_idle" d:IsHidden="True">
             <Image x:Name="image" Margin="0,30" Source="img/logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
@@ -16,7 +16,13 @@
             <TextBlock x:Name="tb_barcode" Height="74" Margin="138,0,186,78" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
 
         </Grid>
-        <Grid x:Name="grid_cart" Visibility="Hidden" d:IsHidden="True"/>
+        <Grid x:Name="grid_cart" Visibility="Hidden">
+            <TextBlock x:Name="tb_total" Height="50" Margin="0,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="0" HorizontalAlignment="Right" Width="167" TextAlignment="Right"/>
+            <TextBlock x:Name="_total" Height="50" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="Total" HorizontalAlignment="Left" Width="113"/>
+            <ScrollViewer x:Name="sv_items" Margin="0,0,0,60" VerticalScrollBarVisibility="Auto" Focusable="False" x:FieldModifier="public">
+                <StackPanel x:Name="sp_items" x:FieldModifier="public"/>
+            </ScrollViewer>
+        </Grid>
         <Grid x:Name="grid_addrfid" Visibility="Hidden" d:IsHidden="True"/>
 
     </Grid>

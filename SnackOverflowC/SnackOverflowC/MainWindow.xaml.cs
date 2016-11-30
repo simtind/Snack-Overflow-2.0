@@ -25,17 +25,15 @@ namespace SnackOverflowC
     {
         private DatabaseInstance db;
         private Grid activeGrid;
-
-        private string barcode;
-        private string rfid;
+        private Cart cart;
         
-
-
         public MainWindow()
         {
             InitializeComponent();
 
             db = new DatabaseInstance();
+            activeGrid = grid_idle;
+            cart = new Cart();
             if (!db.checkDB())
             {
                 MessageBox.Show("Error connecting to database");
@@ -44,9 +42,8 @@ namespace SnackOverflowC
 
             
 
-            activeGrid = grid_idle;
-            barcode = "";
-            rfid = "";
+            
+
 
             ReadLoop();
         }
@@ -102,35 +99,26 @@ namespace SnackOverflowC
 
         void handleBarcode(string barcode)
         {
-            Console.WriteLine("Barcode event handler");
-            Console.WriteLine("Barcode: " + barcode);
-
-            //check if there are no items in cart. then update items accordingly
-            //changeGrid(grid_cart);
-
-            db.itemExists(barcode);
+            //make an item out of available info
+            Item item;
             if (db.itemExists(barcode))
-            {
-                Console.WriteLine("barcode exists!!");
-                Item item = db.getItem(barcode);
+                item = db.getItem(barcode);
+            else
+                item = db.getItem("666"); //666 is the UPC for a non-existent item
 
-                Console.WriteLine(item.upc);
-                Console.WriteLine(item.name);
-                Console.WriteLine(item.alias);
-                Console.WriteLine(item.price);
-            }
-            //update grid_cart  
-            else {
-                Console.WriteLine("barcode doesn't exist");
-                //if not found in db, show invalid UPC
-            }
-
+            if (activeGrid != grid_cart)
+                changeGrid(grid_cart);
+            
+            cart.addItemToCart(item,ref sp_items,ref sv_items,ref tb_total);
         }
+
+       
+
 
         void handleRFID(string rfid)
         {
             Console.WriteLine("RFID event handler");
-            if (db_checkValidity_RFID(rfid))
+            if (db.userExists(rfid))
                 //update user data
                 //update grid_purchase
                 changeGrid(grid_purchase);
@@ -138,12 +126,6 @@ namespace SnackOverflowC
                 //if not found in db, prompt to enter info
             }
             
-        }
-
-        bool db_checkValidity_RFID(string rfid)
-        {
-            //if rfid is found in db, return true
-            return true;
         }
 
         void changeGrid(Grid grid)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace SnackOverflowC
 {
     struct Item
@@ -12,5 +13,6 @@ namespace SnackOverflowC
         public string name;
         public string alias;
         public double price;
+        public byte[] color;
     }
 }
