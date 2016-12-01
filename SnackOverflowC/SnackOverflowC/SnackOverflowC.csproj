@@ -60,6 +60,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Cart.cs" />
+    <Compile Include="ResetTimer.cs" />
     <Compile Include="uc_item.xaml.cs">
       <DependentUpon>uc_item.xaml</DependentUpon>
     </Compile>

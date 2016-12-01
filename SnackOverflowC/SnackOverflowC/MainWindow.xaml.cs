@@ -26,7 +26,14 @@ namespace SnackOverflowC
         private DatabaseInstance db;
         private Grid activeGrid;
         private Cart cart;
-        
+        private ResetTimer cartTimer;
+        private ResetTimer overlayTimer;
+
+
+
+
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -34,15 +41,22 @@ namespace SnackOverflowC
             db = new DatabaseInstance();
             activeGrid = grid_idle;
             cart = new Cart();
+            cartTimer = new ResetTimer(25);
+            overlayTimer = new ResetTimer(10);
+
+            cartTimer.ThresholdReached += cartTimer_ThresholdReached;
+            cartTimer.TimeChanged += cartTimer_TimeChanged;
+
             if (!db.checkDB())
             {
                 MessageBox.Show("Error connecting to database");
                 Environment.Exit(0);
             }
 
-            
 
             
+            
+
 
 
             ReadLoop();
@@ -99,15 +113,18 @@ namespace SnackOverflowC
 
         void handleBarcode(string barcode)
         {
-            //make an item out of available info
+            //change timer label
+            cartTimer.stopTimer();
+            cartTimer.resetTimer();
+            cartTimer.startTimer();
+
             Item item;
             if (db.itemExists(barcode))
                 item = db.getItem(barcode);
             else
                 item = db.getItem("666"); //666 is the UPC for a non-existent item
 
-            if (activeGrid != grid_cart)
-                changeGrid(grid_cart);
+            changeGrid(grid_cart);
             
             cart.addItemToCart(item,ref sp_items,ref sv_items,ref tb_total);
         }
@@ -130,10 +147,26 @@ namespace SnackOverflowC
 
         void changeGrid(Grid grid)
         {
-            activeGrid.Visibility = Visibility.Hidden;
-            activeGrid = grid;
-            activeGrid.Visibility = Visibility.Visible;
+            if (activeGrid != grid)
+            {
+                activeGrid.Visibility = Visibility.Hidden;
+                activeGrid = grid;
+                activeGrid.Visibility = Visibility.Visible;
+            }
+
         }
+
+        private void cartTimer_ThresholdReached(object sender, EventArgs e)
+        {
+            cart.clearCart(ref sp_items);
+            changeGrid(grid_idle);
+        }
+        private void cartTimer_TimeChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(cartTimer.countdown);
+        }
+
+
 
     }
 }

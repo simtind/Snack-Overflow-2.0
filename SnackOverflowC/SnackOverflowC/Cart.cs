@@ -23,7 +23,6 @@ namespace SnackOverflowC
     {
 
         private List<Item> cart;
-        private List<uc_item> entries;
         //private Item lastItem;
         public Cart()
         {
@@ -61,6 +60,12 @@ namespace SnackOverflowC
                 total += items.price;
             }
             tb_total.Text = total.ToString();
+        }
+
+        public void clearCart(ref StackPanel sp_items)
+        {
+            cart.Clear();
+            sp_items.Children.Clear();
         }
 
 
