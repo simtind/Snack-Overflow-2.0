@@ -23,6 +23,20 @@ namespace SnackOverflowC
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// 
+
+
+
+    /*TODO:
+     * Create administrative tool for Snack Overflow
+        - Add/Remove/Edit item from database
+        - Add/Remove/Edit users from database
+        - Add money to users
+        - Edit items in stock
+     * Create system that keeps track of items in stock
+     * Checks to make sure that database editing is recorded
+     * Graphic that makes sure the  user knows if the purchase didn't go through
+     */
     public partial class MainWindow : Window
     {
         private Database db;
@@ -148,7 +162,7 @@ namespace SnackOverflowC
             Console.WriteLine("RFID event handler");
             User user;
 
-
+            Console.WriteLine(db.checkDB());
             if (db.userExists(rfid))
             {
                 //put all of this in a try catch to prevent db issues
@@ -172,13 +186,15 @@ namespace SnackOverflowC
                     cartTimer.resetTimer();
 
                     db.pullBalance(rfid, cart.total);
-                    user = db.getUser(rfid); //get updated balance
+                    user = db.getUser(rfid); //get updated balance after we have pulled balance
 
                     p_tb_student.Text = string.Format("{0} ({1})", user.name, user.username);
                     p_tb_amount.Text = tb_total.Text;
-                    p_tb_balance.Text = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace('.', ',');
-                    changeOverlayPicture(user.picturegroup);
 
+                    string tmp = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace(',','_').Replace('.',',');
+                    p_tb_balance.Text = tmp.Replace('_', '.');
+
+                    changeOverlayPicture(user.picturegroup);
                     changeGrid(grid_purchase);
                     cart.clearCart(ref sp_items, ref tb_total);
                 }

@@ -18,7 +18,7 @@
         <TextBlock x:Name="tb_name" TextWrapping="Wrap" Text="Item" Grid.Column="1" FontSize="32" d:LayoutOverrides="Height, LeftMargin, RightMargin, TopMargin, BottomMargin" Margin="0,2.653,0,8.283" Grid.ColumnSpan="2"/>
         <TextBlock x:Name="tb_price" Grid.Column="4" TextWrapping="Wrap" Margin="0,2.653,0,13.469" FontSize="32" TextAlignment="Right" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Text="0"/>
         <Rectangle x:Name="rect_colorgroup" Margin="10,5.217,10,8.283" Stroke="Black" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Fill="Red" StrokeThickness="0"/>
-        <TextBlock x:Name="tb_quantity" Grid.Column="2" TextWrapping="Wrap" Margin="0,2.653,0,8.283" FontSize="32" HorizontalAlignment="Right" TextAlignment="Right" d:LayoutOverrides="HorizontalAlignment, Height, LeftMargin, RightMargin, TopMargin, BottomMargin" Width="17.25"><Run Text="1"/><LineBreak/><Run/></TextBlock>
+        <TextBlock x:Name="tb_quantity" Grid.Column="2" TextWrapping="Wrap" Margin="0,2.653,0,8.283" FontSize="32" HorizontalAlignment="Right" TextAlignment="Right" d:LayoutOverrides="Height, LeftMargin, RightMargin, TopMargin, BottomMargin" Width="78.221"><Run Text="1"/><LineBreak/><Run/></TextBlock>
         <TextBlock x:Name="_x" Grid.Column="3" TextWrapping="Wrap" Margin="0,2.653,0,8.283" FontSize="32" d:LayoutOverrides="Height, LeftMargin, RightMargin, TopMargin, BottomMargin" Text="x"/>
         <TextBlock x:Name="___" Grid.Column="5" TextWrapping="Wrap" Margin="0,2.653,10,8.283" FontSize="32" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Text="kr"/>
 

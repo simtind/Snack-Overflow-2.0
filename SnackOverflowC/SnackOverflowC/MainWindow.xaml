@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Snack Overflow" Height="720" Width="1080">
     <Grid x:Name="grid_main">
-        <Grid x:Name="grid_idle">
+        <Grid x:Name="grid_idle" d:IsHidden="True">
             <Image x:Name="logo" Margin="0,30" Source="logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
@@ -39,7 +39,7 @@
                 <Image x:Name="p_image" Grid.Row="3"/>
             </Grid>
         </Grid>
-        <Grid x:Name="grid_cart" Visibility="Hidden" d:IsHidden="True">
+        <Grid x:Name="grid_cart" Visibility="Hidden">
             <Grid HorizontalAlignment="Left" Height="30" Margin="10,0,0,60" VerticalAlignment="Bottom" Width="353.666">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="101*"/>

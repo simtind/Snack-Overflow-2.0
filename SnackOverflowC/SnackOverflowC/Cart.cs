@@ -62,7 +62,9 @@ namespace SnackOverflowC
                 total += items.price;
             }
             this.total = total;
-            tb_total.Text = string.Format("{0:N2}", Math.Round(total, 2)).Replace('.',',');
+
+            string tmp = string.Format("{0:N2}", Math.Round(total, 2)).Replace(',', '_').Replace('.', ',');
+            tb_total.Text = tmp.Replace('_', '.');
         }
 
         public void clearCart(ref StackPanel sp_items, ref TextBlock tb_total)

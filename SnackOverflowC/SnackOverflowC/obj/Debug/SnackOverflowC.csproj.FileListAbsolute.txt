@@ -31,4 +31,3 @@ C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOve
 C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.csproj.GenerateResource.Cache
 C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\uc_item.g.cs
 C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\uc_item.baml
-C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\obj\Debug\SnackOverflowC.csprojResolveAssemblyReference.cache
