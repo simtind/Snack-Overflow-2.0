@@ -59,7 +59,8 @@ namespace SnackOverflowC
             {
                 total += items.price;
             }
-            tb_total.Text = total.ToString();
+            total = Math.Truncate(total * 100) / 100;
+            tb_total.Text = string.Format("{0:N1}", total);
         }
 
         public void clearCart(ref StackPanel sp_items)
