@@ -10,11 +10,12 @@ namespace SnackOverflowC
     class ResetTimer
     {
         private DispatcherTimer timer;
-        private int threshold;
+        
 
         public event EventHandler ThresholdReached;
         public event EventHandler TimeChanged;
         public int countdown;
+        public int threshold;
 
 
         public ResetTimer(int threshold)
@@ -44,7 +45,7 @@ namespace SnackOverflowC
             
             
             //fire event to update the timer graphic
-            if (countdown == -1)
+            if (countdown == 0)
             {
                 stopTimer();
                 resetTimer();
@@ -52,6 +53,7 @@ namespace SnackOverflowC
             }
             else
                 OnTimeChanged(EventArgs.Empty);
+
             countdown--;
         }
 

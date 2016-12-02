@@ -117,6 +117,7 @@ namespace SnackOverflowC
             cartTimer.stopTimer();
             cartTimer.resetTimer();
             cartTimer.startTimer();
+            
 
             Item item;
             if (db.itemExists(barcode))
@@ -125,7 +126,8 @@ namespace SnackOverflowC
                 item = db.getItem("666"); //666 is the UPC for a non-existent item
 
             changeGrid(grid_cart);
-            
+
+            tb_resetting.Text = cartTimer.threshold.ToString();
             cart.addItemToCart(item,ref sp_items,ref sv_items,ref tb_total);
         }
 
@@ -163,7 +165,7 @@ namespace SnackOverflowC
         }
         private void cartTimer_TimeChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(cartTimer.countdown);
+            tb_resetting.Text = cartTimer.countdown.ToString();
         }
 
 

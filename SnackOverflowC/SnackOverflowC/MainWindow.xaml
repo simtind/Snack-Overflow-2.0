@@ -19,7 +19,17 @@
         <Grid x:Name="grid_cart" Visibility="Hidden">
             <TextBlock x:Name="tb_total" Height="50" Margin="0,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="0" HorizontalAlignment="Right" Width="167" TextAlignment="Right"/>
             <TextBlock x:Name="_total" Height="50" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="Total" HorizontalAlignment="Left" Width="113"/>
-            <ScrollViewer x:Name="sv_items" Margin="0,0,0,60" VerticalScrollBarVisibility="Auto" Focusable="False" x:FieldModifier="public">
+            <Grid HorizontalAlignment="Left" Height="30" Margin="10,0,0,60" VerticalAlignment="Bottom" Width="353.666">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="101*"/>
+                    <ColumnDefinition Width="24*"/>
+                    <ColumnDefinition Width="229*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="_resetin" TextWrapping="Wrap" Text="Resetting in " d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" FontSize="18.667"/>
+                <TextBlock x:Name="tb_resetting" TextWrapping="Wrap" Margin="-0.002,0" Grid.Column="1" TextAlignment="Right" d:LayoutOverrides="Width, LeftMargin, RightMargin, TopMargin, BottomMargin" FontSize="18.667"><Run Text="25"/><LineBreak/><Run/></TextBlock>
+                <TextBlock x:Name="_sec" TextWrapping="Wrap" Grid.Column="2" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"><Run Text=" "/><Run FontSize="18.667" Text="seconds"/></TextBlock>
+            </Grid>
+            <ScrollViewer x:Name="sv_items" Margin="0,0,0,90" VerticalScrollBarVisibility="Auto" Focusable="False" x:FieldModifier="public">
                 <StackPanel x:Name="sp_items" x:FieldModifier="public"/>
             </ScrollViewer>
         </Grid>
