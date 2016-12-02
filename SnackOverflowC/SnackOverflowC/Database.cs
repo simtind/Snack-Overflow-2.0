@@ -122,5 +122,31 @@ namespace SnackOverflowC
             return false;
         }
 
+        public void pullBalance(string rfid, double amount)
+        {
+            double balance = 0;
+            using (var cmd = new NpgsqlCommand("SELECT balance FROM students WHERE rfid = @rfid", conn))
+            {
+                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        balance = reader.GetDouble(0);
+
+                    }
+                }
+            }
+
+            using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid",conn))
+            {
+                cmd.Parameters.Add(new NpgsqlParameter("balance", balance-amount));
+                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                cmd.ExecuteNonQuery();
+            }
+
+
+        }
+
     }
 }

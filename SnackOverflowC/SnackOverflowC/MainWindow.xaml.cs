@@ -156,24 +156,29 @@ namespace SnackOverflowC
                 //TODO: Put the overlay in new class. this is atrocious.
 
                 //TODO: Add if(user.balance<0)
+               
+
                 overlayTimer.stopTimer();
                 overlayTimer.resetTimer();
                 overlayTimer.startTimer();
                 cartTimer.stopTimer();
                 cartTimer.resetTimer();
 
+                db.pullBalance(rfid, cart.total);
                 user = db.getUser(rfid);
+                
+
+
                 p_tb_student.Text = string.Format("{0} ({1})", user.name, user.username);
                 p_tb_amount.Text = tb_total.Text;
                 p_tb_balance.Text = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace('.', ',');
                 changeOverlayPicture(user.picturegroup);
                 
-                cart.clearCart(ref sp_items,ref tb_total);
-
-                //db.pullBalance();
-                changeGrid(grid_purchase);
-
                 
+
+                changeGrid(grid_purchase);
+                cart.clearCart(ref sp_items, ref tb_total);
+
             }    
             else {
                 MessageBox.Show("Couldn't find RFID" + rfid);
