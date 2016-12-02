@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
+using System.Reflection;
 
 namespace SnackOverflowC
 {
@@ -23,11 +25,12 @@ namespace SnackOverflowC
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DatabaseInstance db;
+        private Database db;
         private Grid activeGrid;
         private Cart cart;
         private ResetTimer cartTimer;
         private ResetTimer overlayTimer;
+        private string dir;
 
 
 
@@ -37,12 +40,19 @@ namespace SnackOverflowC
         public MainWindow()
         {
             InitializeComponent();
+            
+            
 
-            db = new DatabaseInstance();
+
+            db = new Database();
             activeGrid = grid_idle;
             cart = new Cart();
             cartTimer = new ResetTimer(15);
             overlayTimer = new ResetTimer(5);
+            //dir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.G‌​etCurrentProcess().M‌​ainModule.FileName);
+            //logo.Source = new BitmapImage(new Uri(string.Format("{0}/img/logo2.jpg",dir)));
+            dir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.G‌​etCurrentProcess().M‌​ainModule.FileName);
+            logo.Source = new BitmapImage(new Uri(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\logo.jpg"));
 
             cartTimer.ThresholdReached += cartTimer_ThresholdReached;
             cartTimer.TimeChanged += cartTimer_TimeChanged;
@@ -55,7 +65,7 @@ namespace SnackOverflowC
             }
 
 
-            
+
             
 
             ReadLoop();
@@ -156,6 +166,7 @@ namespace SnackOverflowC
                 p_tb_student.Text = string.Format("{0} ({1})", user.name, user.username);
                 p_tb_amount.Text = tb_total.Text;
                 p_tb_balance.Text = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace('.', ',');
+                changeOverlayPicture(user.picturegroup);
                 
                 cart.clearCart(ref sp_items,ref tb_total);
 
@@ -185,6 +196,13 @@ namespace SnackOverflowC
 
         }
 
+        void changeOverlayPicture(string picturegroup)
+        {
+            int fCount = Directory.EnumerateFiles(string.Format(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\{0}", picturegroup), "*.png", SearchOption.AllDirectories).Count();
+            Random rnd = new Random();
+            int rand = rnd.Next(1, fCount+1);
+            p_image.Source = new BitmapImage(new Uri(string.Format(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\{0}\{1}.png",picturegroup,rand)));
+        }
         #endregion
 
         #region Events

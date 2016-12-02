@@ -11,5 +11,7 @@ namespace SnackOverflowC
         public string name;
         public string username;
         public double balance;
+        public string rfid;
+        public string picturegroup;
     }
 }

@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SnackOverflowC
 {
-    class DatabaseInstance
+    class Database
     {
         private NpgsqlConnection conn;
 
 
-        public DatabaseInstance()
+        public Database()
         {
             conn = new NpgsqlConnection("Host=127.0.0.1;Port=5432;Username=postgres;Password=admin;Database=snackoverflow");
         }
@@ -69,6 +69,27 @@ namespace SnackOverflowC
             return item;
         }
 
+        public User getUser(string rfid)
+        {
+            User user = new User();
+            using (var cmd = new NpgsqlCommand("SELECT name,balance,username,picture FROM students WHERE rfid = @rfid", conn))
+            {
+                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.name = reader.GetString(0);
+                        user.balance = reader.GetDouble(1);
+                        user.username = reader.GetString(2);
+                        user.picturegroup = reader.GetString(3);
+                        user.rfid = rfid;
+                    }
+                }
+            }
+            return user;
+        }
+
         public bool itemExists(string upc)
         {
             using (var cmd = new NpgsqlCommand("SELECT EXISTS(SELECT upc FROM items WHERE upc = @upc)", conn))
@@ -99,25 +120,6 @@ namespace SnackOverflowC
                 }
             }
             return false;
-        }
-
-        public User getUser(string rfid)
-        {
-            User user = new User();
-            using (var cmd = new NpgsqlCommand("SELECT name,balance,username FROM students WHERE rfid = @rfid", conn))
-            {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        user.name = reader.GetString(0);
-                        user.balance = reader.GetDouble(1);
-                        user.username = reader.GetString(2);
-                    }
-                }
-            }
-            return user;
         }
 
     }

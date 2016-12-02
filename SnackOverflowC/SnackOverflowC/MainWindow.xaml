@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="Snack Overflow" Height="720" Width="1080">
     <Grid x:Name="grid_main">
-        <Grid x:Name="grid_idle" d:IsHidden="True">
-            <Image x:Name="image" Margin="0,30" Source="img/logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid x:Name="grid_idle">
+            <Image x:Name="logo" Margin="0,30" Source="logo.jpg" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         </Grid>
 
-        <Grid x:Name="grid_purchase" Visibility="Hidden">
+        <Grid x:Name="grid_purchase" d:IsHidden="True" Visibility="Hidden">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="98.429"/>
@@ -36,7 +36,7 @@
                     <TextBlock x:Name="textBlock1" TextWrapping="Wrap" FontSize="32" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" Text="Balance: "/>
                     <TextBlock x:Name="p_tb_balance" Grid.Column="1" TextWrapping="Wrap" Text="0" FontSize="32" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
                 </Grid>
-                <Image x:Name="p_image" Grid.Row="3" Stretch="UniformToFill"/>
+                <Image x:Name="p_image" Grid.Row="3"/>
             </Grid>
         </Grid>
         <Grid x:Name="grid_cart" Visibility="Hidden" d:IsHidden="True">

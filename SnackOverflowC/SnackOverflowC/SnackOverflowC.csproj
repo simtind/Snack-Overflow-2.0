@@ -113,11 +113,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="img\kimjongun\" />
-    <Folder Include="img\obamabiden\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\logo.jpg" />
+    <Resource Include="logo.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
