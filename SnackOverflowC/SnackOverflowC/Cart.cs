@@ -24,6 +24,7 @@ namespace SnackOverflowC
 
         private List<Item> cart;
         private Item lastItem;
+        public double total;
         //private Item lastItem;
         public Cart()
         {
@@ -31,7 +32,7 @@ namespace SnackOverflowC
         }
         public void addItemToCart(Item item, ref StackPanel sp_items, ref ScrollViewer sv_items, ref TextBlock tb_total)
         {
-            if(item.upc != lastItem.upc)
+            if(item.upc != lastItem.upc || sp_items.Children.Count == 0)
             {
                 uc_item child = new uc_item();
                 child.tb_name.Text = item.alias;
@@ -60,14 +61,16 @@ namespace SnackOverflowC
             {
                 total += items.price;
             }
-            
+            this.total = total;
             tb_total.Text = string.Format("{0:N2}", Math.Round(total, 2)).Replace('.',',');
         }
 
-        public void clearCart(ref StackPanel sp_items)
+        public void clearCart(ref StackPanel sp_items, ref TextBlock tb_total)
         {
             cart.Clear();
             sp_items.Children.Clear();
+            tb_total.Text = "0";
+
         }
 
 

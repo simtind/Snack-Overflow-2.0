@@ -10,8 +10,8 @@ namespace SnackOverflowC
     class DatabaseInstance
     {
         private NpgsqlConnection conn;
-        
-        
+
+
         public DatabaseInstance()
         {
             conn = new NpgsqlConnection("Host=127.0.0.1;Port=5432;Username=postgres;Password=admin;Database=snackoverflow");
@@ -32,13 +32,13 @@ namespace SnackOverflowC
                 return false;
             }
 
-            
+
         }
 
         public Item getItem(string upc)
         {
             Item item = new Item();
-            using (var cmd = new NpgsqlCommand("SELECT upc,name,alias,price,color FROM items WHERE upc = @upc",conn))
+            using (var cmd = new NpgsqlCommand("SELECT upc,name,alias,price,color FROM items WHERE upc = @upc", conn))
             {
                 cmd.Parameters.Add(new NpgsqlParameter("upc", upc));
                 using (var reader = cmd.ExecuteReader())
@@ -59,9 +59,9 @@ namespace SnackOverflowC
                         {
                             colorStrings = new string[3] { "255", "0", "0" };
                         }
-                        
+
                         item.color = new byte[3];
-                        for(int i = 0;i<3;i++)
+                        for (int i = 0; i < 3; i++)
                             item.color[i] = byte.Parse(colorStrings[i]);
                     }
                 }
@@ -101,10 +101,24 @@ namespace SnackOverflowC
             return false;
         }
 
-
-
-
-
+        public User getUser(string rfid)
+        {
+            User user = new User();
+            using (var cmd = new NpgsqlCommand("SELECT name,balance,username FROM students WHERE rfid = @rfid", conn))
+            {
+                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        user.name = reader.GetString(0);
+                        user.balance = reader.GetDouble(1);
+                        user.username = reader.GetString(2);
+                    }
+                }
+            }
+            return user;
+        }
 
     }
 }

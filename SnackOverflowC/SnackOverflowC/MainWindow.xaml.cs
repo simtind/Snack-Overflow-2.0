@@ -41,11 +41,12 @@ namespace SnackOverflowC
             db = new DatabaseInstance();
             activeGrid = grid_idle;
             cart = new Cart();
-            cartTimer = new ResetTimer(25);
-            overlayTimer = new ResetTimer(10);
+            cartTimer = new ResetTimer(15);
+            overlayTimer = new ResetTimer(5);
 
             cartTimer.ThresholdReached += cartTimer_ThresholdReached;
             cartTimer.TimeChanged += cartTimer_TimeChanged;
+            overlayTimer.ThresholdReached += overlayTimer_ThresholdReached;
 
             if (!db.checkDB())
             {
@@ -57,11 +58,10 @@ namespace SnackOverflowC
             
             
 
-
-
             ReadLoop();
         }
 
+        #region Input handlers
         public async Task ReadLoop()
         {
             #region irrelevant
@@ -117,7 +117,9 @@ namespace SnackOverflowC
             cartTimer.stopTimer();
             cartTimer.resetTimer();
             cartTimer.startTimer();
-            
+            overlayTimer.stopTimer();
+            overlayTimer.resetTimer();
+
 
             Item item;
             if (db.itemExists(barcode))
@@ -131,22 +133,47 @@ namespace SnackOverflowC
             cart.addItemToCart(item,ref sp_items,ref sv_items,ref tb_total);
         }
 
-       
-
-
         void handleRFID(string rfid)
         {
             Console.WriteLine("RFID event handler");
+            User user;
+
+
             if (db.userExists(rfid))
-                //update user data
-                //update grid_purchase
+            {
+                //put all of this in a try catch to prevent db issues
+                //notify user if purchase didnt go through
+                //TODO: Put the overlay in new class. this is atrocious.
+
+                //TODO: Add if(user.balance<0)
+                overlayTimer.stopTimer();
+                overlayTimer.resetTimer();
+                overlayTimer.startTimer();
+                cartTimer.stopTimer();
+                cartTimer.resetTimer();
+
+                user = db.getUser(rfid);
+                p_tb_student.Text = string.Format("{0} ({1})", user.name, user.username);
+                p_tb_amount.Text = tb_total.Text;
+                p_tb_balance.Text = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace('.', ',');
+                
+                cart.clearCart(ref sp_items,ref tb_total);
+
+                //db.pullBalance();
                 changeGrid(grid_purchase);
+
+                
+            }    
             else {
-                //if not found in db, prompt to enter info
+                MessageBox.Show("Couldn't find RFID" + rfid);
             }
+            
             
         }
 
+        #endregion
+
+        #region Helper functions
         void changeGrid(Grid grid)
         {
             if (activeGrid != grid)
@@ -158,15 +185,32 @@ namespace SnackOverflowC
 
         }
 
+        #endregion
+
+        #region Events
         private void cartTimer_ThresholdReached(object sender, EventArgs e)
         {
-            cart.clearCart(ref sp_items);
+            cart.clearCart(ref sp_items, ref tb_total);
             changeGrid(grid_idle);
         }
         private void cartTimer_TimeChanged(object sender, EventArgs e)
         {
             tb_resetting.Text = cartTimer.countdown.ToString();
         }
+
+        private void overlayTimer_ThresholdReached(object sender, EventArgs e)
+        {
+            
+            p_tb_amount.Text = "0";
+            p_tb_balance.Text = "0";
+            p_tb_student.Text = "Invalid Student";
+            p_image.Source = null;
+
+            cart.clearCart(ref sp_items, ref tb_total);
+            changeGrid(grid_idle);
+        }
+
+        #endregion
 
 
 
