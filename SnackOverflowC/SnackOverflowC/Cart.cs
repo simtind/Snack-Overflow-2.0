@@ -23,6 +23,7 @@ namespace SnackOverflowC
     {
 
         private List<Item> cart;
+        private Item lastItem;
         //private Item lastItem;
         public Cart()
         {
@@ -30,24 +31,24 @@ namespace SnackOverflowC
         }
         public void addItemToCart(Item item, ref StackPanel sp_items, ref ScrollViewer sv_items, ref TextBlock tb_total)
         {
-            //if(item.upc != lastItem.upc)
-            //{
+            if(item.upc != lastItem.upc)
+            {
                 uc_item child = new uc_item();
                 child.tb_name.Text = item.alias;
-                child.tb_price.Text = item.price.ToString();
+                child.tb_price.Text = string.Format("{0:N2}", Math.Round(item.price, 2)).Replace('.', ',');
                 child.rect_colorgroup.Fill = new SolidColorBrush(Color.FromRgb(item.color[0], item.color[1], item.color[2]));
+                child.tb_quantity.Text = "1";
 
                 sp_items.Children.Add(child);
                 sv_items.ScrollToBottom();
-            //}
-            //else
-            //{
+            }
+            else
+            {
+                string qty = sp_items.Children.OfType<uc_item>().LastOrDefault().tb_quantity.Text;
+                sp_items.Children.OfType<uc_item>().LastOrDefault().tb_quantity.Text = (int.Parse(qty) + 1).ToString();
+            }
 
-            //    Console.WriteLine(sp_items.Children.OfType<uc_item>().LastOrDefault().tb_quantity.Text);
-            //    //sp_items.Children.OfType<uc_item>().LastOrDefault().tb_quantity.Text = (qty + 1).ToString();
-            //}
-
-            //lastItem = item;
+            lastItem = item;
             cart.Add(item);
             updateTotal(ref tb_total);
         }
@@ -59,8 +60,8 @@ namespace SnackOverflowC
             {
                 total += items.price;
             }
-            total = Math.Truncate(total * 100) / 100;
-            tb_total.Text = string.Format("{0:N1}", total);
+            
+            tb_total.Text = string.Format("{0:N2}", Math.Round(total, 2)).Replace('.',',');
         }
 
         public void clearCart(ref StackPanel sp_items)

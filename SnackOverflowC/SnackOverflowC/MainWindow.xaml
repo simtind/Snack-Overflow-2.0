@@ -16,9 +16,7 @@
             <TextBlock x:Name="tb_barcode" Height="74" Margin="138,0,186,78" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
 
         </Grid>
-        <Grid x:Name="grid_cart" Visibility="Hidden">
-            <TextBlock x:Name="tb_total" Height="50" Margin="0,0,10,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="0" HorizontalAlignment="Right" Width="167" TextAlignment="Right"/>
-            <TextBlock x:Name="_total" Height="50" Margin="10,0,0,10" TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="32" Text="Total" HorizontalAlignment="Left" Width="113"/>
+        <Grid x:Name="grid_cart" Visibility="Hidden" d:IsHidden="True">
             <Grid HorizontalAlignment="Left" Height="30" Margin="10,0,0,60" VerticalAlignment="Bottom" Width="353.666">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="101*"/>
@@ -32,8 +30,17 @@
             <ScrollViewer x:Name="sv_items" Margin="0,0,0,90" VerticalScrollBarVisibility="Auto" Focusable="False" x:FieldModifier="public">
                 <StackPanel x:Name="sp_items" x:FieldModifier="public"/>
             </ScrollViewer>
+            <Grid Height="60" VerticalAlignment="Bottom" Margin="10,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="26*"/>
+                    <ColumnDefinition Width="315*"/>
+                    <ColumnDefinition Width="13*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="_total" TextWrapping="Wrap" FontSize="32" Text="Total" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+                <TextBlock x:Name="tb_total" Grid.Column="1" TextWrapping="Wrap" Text="0" Margin="1,0,0,0" FontSize="32" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin" TextAlignment="Right"/>
+                <TextBlock x:Name="_" Grid.Column="2" TextWrapping="Wrap" FontSize="32" Text="kr" Margin="1,0,10,14.833" d:LayoutOverrides="LeftMargin, RightMargin, TopMargin, BottomMargin"/>
+            </Grid>
         </Grid>
-        <Grid x:Name="grid_addrfid" Visibility="Hidden" d:IsHidden="True"/>
 
     </Grid>
 </Window>
