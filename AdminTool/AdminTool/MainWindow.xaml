@@ -1,0 +1,32 @@
+﻿<Window x:Class="AdminTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminTool"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="328.395" ResizeMode="NoResize">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox x:Name="groupBox" Header="Users" Margin="10,0,0,10">
+            <Grid x:Name="gb_user" Margin="0,10,0,0">
+                <Button x:Name="bt_add_balance" Height="33.797" Margin="10,10,10,0" VerticalAlignment="Top" Content="Add Balance"/>
+                <Button x:Name="bt_add_user" Content="Add User" Margin="10,48.797,10,0" Height="33.274" VerticalAlignment="Top"/>
+                <Button x:Name="button_Copy1" Content="Edit User" Margin="10,0,10,10" Height="34.392" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Visibility="Hidden"/>
+                <Button x:Name="View_All_Users" Margin="10,0,10,49.392" Content="View All Users" Height="33.797" VerticalAlignment="Bottom" Visibility="Hidden"/>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="groupBox_Copy" Header="Inventory" Margin="0,0,10,10" Grid.Column="2">
+            <Grid x:Name="gb_user1" Margin="0,10,0,0">
+                <Button x:Name="bt_add_item" Height="33.797" Margin="10,10,10,0" VerticalAlignment="Top" Content="Add Item"/>
+                <Button x:Name="button_Copy3" Content="Edit Item" Margin="10,0,10,10" Height="34.392" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Visibility="Hidden"/>
+                <Button x:Name="View_All_Users1" Margin="10,0,10,49.392" Content="View All Items" Height="33.797" VerticalAlignment="Bottom" Visibility="Hidden"/>
+            </Grid>
+        </GroupBox>
+
+    </Grid>
+</Window>

@@ -161,8 +161,6 @@ namespace SnackOverflowC
         {
             Console.WriteLine("RFID event handler");
             User user;
-
-            Console.WriteLine(db.checkDB());
             if (db.userExists(rfid))
             {
                 //put all of this in a try catch to prevent db issues
@@ -191,8 +189,7 @@ namespace SnackOverflowC
                     p_tb_student.Text = string.Format("{0} ({1})", user.name, user.username);
                     p_tb_amount.Text = tb_total.Text;
 
-                    string tmp = string.Format("{0:N2}", Math.Round(user.balance, 2)).Replace(',','_').Replace('.',',');
-                    p_tb_balance.Text = tmp.Replace('_', '.');
+                    p_tb_balance.Text = string.Format("{0:N2}", Math.Round(user.balance, 2));
 
                     changeOverlayPicture(user.picturegroup);
                     changeGrid(grid_purchase);

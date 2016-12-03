@@ -36,7 +36,7 @@ namespace SnackOverflowC
             {
                 uc_item child = new uc_item();
                 child.tb_name.Text = item.alias;
-                child.tb_price.Text = string.Format("{0:N2}", Math.Round(item.price, 2)).Replace('.', ',');
+                child.tb_price.Text = string.Format("{0:N2}", Math.Round(item.price, 2));
                 child.rect_colorgroup.Fill = new SolidColorBrush(Color.FromRgb(item.color[0], item.color[1], item.color[2]));
                 child.tb_quantity.Text = "1";
 
@@ -63,13 +63,13 @@ namespace SnackOverflowC
             }
             this.total = total;
 
-            string tmp = string.Format("{0:N2}", Math.Round(total, 2)).Replace(',', '_').Replace('.', ',');
-            tb_total.Text = tmp.Replace('_', '.');
+            tb_total.Text = string.Format("{0:N2}", Math.Round(total, 2));
         }
 
         public void clearCart(ref StackPanel sp_items, ref TextBlock tb_total)
         {
             cart.Clear();
+            total = 0;
             sp_items.Children.Clear();
             tb_total.Text = "0";
 
