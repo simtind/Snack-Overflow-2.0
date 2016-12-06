@@ -12,7 +12,7 @@
             <RowDefinition Height="29*"/>
             <RowDefinition Height="240*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Waiting for RFID" FontSize="21.333" TextAlignment="Center"/>
+        <TextBlock x:Name="tb_waiting" TextWrapping="Wrap" Text="Waiting for RFID" FontSize="21.333" TextAlignment="Center"/>
         <Grid Grid.Row="1">
             <TextBlock x:Name="Name_" HorizontalAlignment="Left" Height="20.987" Margin="0,10,0,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" Width="69.136"/>
             <TextBlock x:Name="Name__Copy" HorizontalAlignment="Left" Height="20.987" Margin="0,35.987,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="69.136"/>
@@ -20,9 +20,9 @@
             <TextBlock x:Name="tb_name" Height="20.987" Margin="69.136,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
             <TextBlock x:Name="tb_username" Height="20.987" Margin="69.136,35.987,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
             <TextBlock x:Name="tb_currentBalance" Height="20.987" Margin="69.136,61.974,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-            <xctk:DecimalUpDown Margin="10,87.962,10,79.822" Maximum="10000" Minimum="0" FormatString="F2" Text="0.00" FontSize="48"/>
+            <xctk:DecimalUpDown x:Name="dc_balance" Margin="10,87.962,10,79.822" Maximum="10000" Minimum="0" FormatString="F2" Text="0.00" FontSize="48"/>
             <Button x:Name="bt_close" Content="Close" HorizontalAlignment="Right" Height="20" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="60" IsCancel="True"/>
-            <Button x:Name="bt_apply" Content="Apply" HorizontalAlignment="Right" Height="20" Margin="0,0,75,10" VerticalAlignment="Bottom" Width="60"/>
+            <Button x:Name="bt_apply" Content="Apply" HorizontalAlignment="Right" Height="20" Margin="0,0,75,10" VerticalAlignment="Bottom" Width="60" IsEnabled="False"/>
         </Grid>
 
     </Grid>
