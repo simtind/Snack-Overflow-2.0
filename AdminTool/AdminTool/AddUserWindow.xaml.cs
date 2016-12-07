@@ -24,10 +24,12 @@ namespace AdminTool
         SnackOverflowC.Database db;
         SnackOverflowC.User user;
         UdpClient client;
+
         public AddUserWindow()
         {
             InitializeComponent();
             db = new SnackOverflowC.Database();
+
 
             if (!db.checkDB())
             {
@@ -43,7 +45,7 @@ namespace AdminTool
 
         }
 
-        public void UpdatePictureComboBox()
+        private void UpdatePictureComboBox()
         {
             cb_picturegroup.Items.Clear();
             db.getPictureGroups();
@@ -56,7 +58,7 @@ namespace AdminTool
             cb_picturegroup.SelectedItem = cb_picturegroup.Items.GetItemAt(0);
         }
 
-        public async Task ReadLoop()
+        private async Task ReadLoop()
         {
             using (client = new UdpClient(25565))
             {
@@ -68,7 +70,7 @@ namespace AdminTool
             }
         }
 
-        void handleInput(string input)
+        private void handleInput(string input)
         {
             if (input.StartsWith("[RFID]"))
             {
@@ -114,6 +116,7 @@ namespace AdminTool
             {
                 Console.WriteLine("Already closed UDPClient");
             }
+
         }
 
         private void bt_apply_Click(object sender, RoutedEventArgs e)

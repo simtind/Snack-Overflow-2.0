@@ -21,7 +21,6 @@ namespace AdminTool
     /// </summary>
     public partial class MainWindow : Window
     {
-        public event EventHandler RFIDScanned;
         public MainWindow()
         {
 
@@ -34,23 +33,14 @@ namespace AdminTool
 
         private void bt_add_balance_Click(object sender, RoutedEventArgs e)
         {
-            (new AddBalanceWindow()).Show();
+                AddBalanceWindow window = new AddBalanceWindow();
+                window.ShowDialog();  
         }
 
         private void bt_add_user_Click(object sender, RoutedEventArgs e)
         {
-            (new AddUserWindow()).Show();
-        }
-
-        public void OnRFIDScanned(EventArgs e)
-        {
-            EventHandler handler = RFIDScanned;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-
-        
+                AddUserWindow window = new AddUserWindow();
+                window.ShowDialog();
+        }     
     }
 }

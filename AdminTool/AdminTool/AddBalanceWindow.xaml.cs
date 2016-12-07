@@ -24,6 +24,7 @@ namespace AdminTool
         SnackOverflowC.Database db;
         SnackOverflowC.User user;
         UdpClient client;
+        
         public AddBalanceWindow()
         {
             InitializeComponent();
@@ -101,6 +102,7 @@ namespace AdminTool
             {
                 Console.WriteLine("Already closed UDPClient");
             }
+
         }
 
         private void bt_apply_Click(object sender, RoutedEventArgs e)
