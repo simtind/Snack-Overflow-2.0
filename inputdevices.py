@@ -23,5 +23,25 @@ def handleBarcodeReader():
         else:
             line += c
 
+def handleRFIDReader():
+
+    ser = serial.Serial('COM3', 9600)
+    line = b''
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    while True:
+        c = ser.read()
+        if c == b'\r' or c == b'\n':
+            sock.sendto('[RFID] %s' % line.decode('utf-8'), ("127.0.0.1", 25565))
+            print('[RFID] %s' % line.decode('utf-8'))
+            sys.stdout.flush()
+            line = b''
+        else:
+            line += c
+
 thread_barcode = threading.Thread(target = handleBarcodeReader)
 thread_barcode.start()
+
+thread_barcode = threading.Thread(target = handleRFIDReader)
+thread_barcode.start()
+

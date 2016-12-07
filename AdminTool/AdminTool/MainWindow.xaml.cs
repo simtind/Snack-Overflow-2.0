@@ -27,40 +27,19 @@ namespace AdminTool
 
             InitializeComponent();
 
-            
             bt_add_balance.Click += bt_add_balance_Click;
-            ReadLoop();
+            bt_add_user.Click += bt_add_user_Click;
 
         }
 
-        public async Task ReadLoop()
-        {
-            using (UdpClient client = new UdpClient(25565))
-            {
-                while (true)
-                {
-                    var data = await client.ReceiveAsync();
-                    handleInput(Encoding.ASCII.GetString(data.Buffer));
-                }
-            }
-        }
-
-        void handleInput(string input)
-        {
-            if (input.StartsWith("[RFID]"))
-            {
-                input = input.Replace("[RFID] ", "");
-                OnRFIDScanned(EventArgs.Empty);
-            }
-            else if (input.StartsWith("[BARCODE]"))
-            {
-                input = input.Replace("[BARCODE] ", "");
-            }
-        }
         private void bt_add_balance_Click(object sender, RoutedEventArgs e)
         {
-            AddBalanceWindow add_balance = new AddBalanceWindow();
-            add_balance.ShowDialog();
+            (new AddBalanceWindow()).Show();
+        }
+
+        private void bt_add_user_Click(object sender, RoutedEventArgs e)
+        {
+            (new AddUserWindow()).Show();
         }
 
         public void OnRFIDScanned(EventArgs e)

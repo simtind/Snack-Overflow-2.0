@@ -176,5 +176,34 @@ namespace SnackOverflowC
 
         }
 
+        public List<string> getPictureGroups()
+        {
+            List<string> list = new List<string>();
+            using (var cmd = new NpgsqlCommand("SELECT * FROM PICTUREGROUPS", conn))
+            {
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(reader.GetString(0));
+                    }
+                }
+            }
+            return list;
+        } 
+
+        public void addUser(User user)
+        {
+            using (var cmd = new NpgsqlCommand("INSERT INTO students (rfid,name,balance,picture,username) VALUES (@rfid,@name,@balance,@picture,@username)", conn))
+            {
+                cmd.Parameters.Add(new NpgsqlParameter("rfid", user.rfid));
+                cmd.Parameters.Add(new NpgsqlParameter("name", user.name));
+                cmd.Parameters.Add(new NpgsqlParameter("username", user.username));
+                cmd.Parameters.Add(new NpgsqlParameter("balance", user.balance));
+                cmd.Parameters.Add(new NpgsqlParameter("picture", user.picturegroup));
+
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

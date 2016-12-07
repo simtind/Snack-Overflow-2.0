@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 namespace AdminTool
 {
     /// <summary>
-    /// Interaction logic for AddBalanceWindow.xaml
+    /// Interaction logic for AddUserWindow.xaml
     /// </summary>
-    public partial class AddBalanceWindow : Window
+    public partial class AddUserWindow : Window
     {
         SnackOverflowC.Database db;
         SnackOverflowC.User user;
         UdpClient client;
-        public AddBalanceWindow()
+        public AddUserWindow()
         {
             InitializeComponent();
             db = new SnackOverflowC.Database();
@@ -38,8 +38,22 @@ namespace AdminTool
             bt_apply.Click += bt_apply_Click;
             bt_close.Click += bt_close_Click;
 
+            UpdatePictureComboBox();
             ReadLoop();
 
+        }
+
+        public void UpdatePictureComboBox()
+        {
+            cb_picturegroup.Items.Clear();
+            db.getPictureGroups();
+
+            var groups = db.getPictureGroups();
+            foreach (var group in groups)
+            {
+                cb_picturegroup.Items.Add(group);
+            }
+            cb_picturegroup.SelectedItem = cb_picturegroup.Items.GetItemAt(0);
         }
 
         public async Task ReadLoop()
@@ -59,19 +73,18 @@ namespace AdminTool
             if (input.StartsWith("[RFID]"))
             {
                 input = input.Replace("[RFID] ", "");
-                Console.WriteLine(input);
                 if (db.userExists(input))
                 {
-                    user = db.getUser(input);
+                    MessageBox.Show("User already exists in database");
+                }
+                else
+                {
                     bt_apply.IsEnabled = true;
                     tb_waiting.Text = "RFID Found!";
-                    tb_currentBalance.Text = user.balance.ToString();
-                    tb_name.Text = user.name;
-                    tb_username.Text = user.username;
-                    //Change overlay to show data from RFID
+                    tb_RFID.Text = input;
+                    Console.WriteLine(cb_picturegroup.SelectedValue);
                 }
-                else MessageBox.Show("Invalid RFID");
-
+                
             }
         }
 
@@ -105,16 +118,25 @@ namespace AdminTool
 
         private void bt_apply_Click(object sender, RoutedEventArgs e)
         {
-            db.addBalance(user.rfid, double.Parse(dc_balance.Value.ToString()));
-            MessageBox.Show(string.Format("Successfully added {0} kr to {1}",dc_balance.Value,user.username));
+            //if one field is empty, do none of the below
+            //MessageBox.Show(string.Format("Successfully added \n Name: {0}\n Username {1} \n Picture group {2}", user.username));
             user = new SnackOverflowC.User();
             bt_apply.IsEnabled = false;
             tb_waiting.Text = "Waiting for RFID";
-            tb_username.Text = "";
-            tb_name.Text = "";
-            tb_currentBalance.Text = "";
-            dc_balance.Value = 0;
+            user.balance = 0;
+            user.name = tb_name.Text;
+            user.username = tb_username.Text;
+            user.rfid = tb_RFID.Text;
+            user.picturegroup = cb_picturegroup.SelectedValue.ToString();
+            db.addUser(user);
+
             
+            tb_name.Text = "";
+            tb_username.Text = "";
+            tb_RFID.Text = "";
+            cb_picturegroup.SelectedItem = cb_picturegroup.Items.GetItemAt(0);
+
         }
     }
 }
+
