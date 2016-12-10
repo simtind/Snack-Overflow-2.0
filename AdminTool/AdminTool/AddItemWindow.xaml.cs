@@ -13,19 +13,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Drawing;
 
 namespace AdminTool
 {
     /// <summary>
     /// Interaction logic for AddUserWindow.xaml
     /// </summary>
-    public partial class AddUserWindow : Window
+    public partial class AddItemWindow : Window
     {
         SnackOverflowC.Database db;
-        SnackOverflowC.User user;
+        SnackOverflowC.Item item;
         UdpClient client;
 
-        public AddUserWindow()
+        public AddItemWindow()
         {
             InitializeComponent();
             db = new SnackOverflowC.Database();
@@ -40,30 +41,8 @@ namespace AdminTool
             bt_apply.Click += bt_apply_Click;
             bt_close.Click += bt_close_Click;
 
-            UpdatePictureComboBox();
             ReadLoop();
 
-        }
-
-        private void UpdatePictureComboBox()
-        {
-            try
-            {
-                cb_picturegroup.Items.Clear();
-                db.getPictureGroups();
-
-                var groups = db.getPictureGroups();
-                foreach (var group in groups)
-                {
-                    cb_picturegroup.Items.Add(group);
-                }
-                cb_picturegroup.SelectedItem = cb_picturegroup.Items.GetItemAt(0);
-            }
-            catch
-            {
-                MessageBox.Show("Error retrieving data from database");
-            }
-            
         }
 
         private async Task ReadLoop()
@@ -80,21 +59,20 @@ namespace AdminTool
 
         private void handleInput(string input)
         {
-            if (input.StartsWith("[RFID]"))
+            if (input.StartsWith("[BARCODE]"))
             {
-                input = input.Replace("[RFID] ", "");
-                if (db.userExists(input))
+                input = input.Replace("[BARCODE] ", "");
+                if (db.itemExists(input))
                 {
-                    MessageBox.Show("User already exists in database");
+                    MessageBox.Show("Item already exists in database");
                 }
                 else
                 {
                     bt_apply.IsEnabled = true;
-                    tb_waiting.Text = "RFID Found!";
-                    tb_RFID.Text = input;
-                    Console.WriteLine(cb_picturegroup.SelectedValue);
+                    tb_waiting.Text = "Barcode Found!";
+                    tb_barcode.Text = input;
                 }
-                
+
             }
         }
 
@@ -129,32 +107,35 @@ namespace AdminTool
 
         private void bt_apply_Click(object sender, RoutedEventArgs e)
         {
-            //if one field is empty, do none of the below
-            //MessageBox.Show(string.Format("Successfully added \n Name: {0}\n Username {1} \n Picture group {2}", user.username));
-            if (tb_name.Text != "" && tb_username.Text != "")
+            if (tb_name.Text != "" && tb_alias.Text != "" && cp_colorpicker.SelectedColorText!="")
             {
-
-
-                user = new SnackOverflowC.User();
+                item = new SnackOverflowC.Item();
                 bt_apply.IsEnabled = false;
-                user.balance = 0;
-                user.name = tb_name.Text;
-                user.username = tb_username.Text;
-                user.rfid = tb_RFID.Text;
-                user.picturegroup = cb_picturegroup.SelectedValue.ToString();
+
+                item.alias = tb_alias.Text;
+                item.name = tb_name.Text;
+                item.upc = tb_barcode.Text;
+                item.price = double.Parse(dc_price.Value.ToString());
+                System.Drawing.Color col = ColorTranslator.FromHtml(cp_colorpicker.SelectedColorText);
+
+                item.color = new byte[3];
+                item.color[0] = col.R;
+                item.color[1] = col.G;
+                item.color[2] = col.B;
+
                 try
                 {
-                    db.addUser(user);
+                    db.addItem(item);
+                    tb_alias.Text = "";
                     tb_name.Text = "";
-                    tb_username.Text = "";
-                    tb_RFID.Text = "";
-                    cb_picturegroup.SelectedItem = cb_picturegroup.Items.GetItemAt(0);
-                    tb_waiting.Text = "Waiting for RFID";
-                    MessageBox.Show(string.Format("Successfully added \nName: {0}\nUsername {1} \nPictures: {2}", user.name,user.username,user.picturegroup));
+                    tb_barcode.Text = "";
+                    dc_price.Value=0;
+                    tb_waiting.Text = "Waiting for barcode";
+                    MessageBox.Show("Successfully added item");
                 }
-                catch
+                catch(Exception f)
                 {
-                    MessageBox.Show("Error adding user");
+                    MessageBox.Show("Error adding item");
                 }
 
             }

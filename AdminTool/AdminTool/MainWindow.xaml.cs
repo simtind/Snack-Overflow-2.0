@@ -28,7 +28,14 @@ namespace AdminTool
 
             bt_add_balance.Click += bt_add_balance_Click;
             bt_add_user.Click += bt_add_user_Click;
+            bt_add_item.Click += Bt_add_item_Click;
 
+        }
+
+        private void Bt_add_item_Click(object sender, RoutedEventArgs e)
+        {
+            AddItemWindow window = new AddItemWindow();
+            window.ShowDialog();
         }
 
         private void bt_add_balance_Click(object sender, RoutedEventArgs e)
@@ -41,6 +48,6 @@ namespace AdminTool
         {
                 AddUserWindow window = new AddUserWindow();
                 window.ShowDialog();
-        }     
+        }
     }
 }

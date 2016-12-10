@@ -16,15 +16,11 @@
             <Grid x:Name="gb_user" Margin="0,10,0,0">
                 <Button x:Name="bt_add_balance" Height="33.797" Margin="10,10,10,0" VerticalAlignment="Top" Content="Add Balance"/>
                 <Button x:Name="bt_add_user" Content="Add User" Margin="10,48.797,10,0" Height="33.274" VerticalAlignment="Top"/>
-                <Button x:Name="button_Copy1" Content="Edit User" Margin="10,0,10,10" Height="34.392" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Visibility="Hidden"/>
-                <Button x:Name="View_All_Users" Margin="10,0,10,49.392" Content="View All Users" Height="33.797" VerticalAlignment="Bottom" Visibility="Hidden"/>
             </Grid>
         </GroupBox>
         <GroupBox x:Name="groupBox_Copy" Header="Inventory" Margin="0,0,10,10" Grid.Column="2">
             <Grid x:Name="gb_user1" Margin="0,10,0,0">
-                <Button x:Name="bt_add_item" Height="33.797" Margin="10,10,10,0" VerticalAlignment="Top" Content="Add Item"/>
-                <Button x:Name="button_Copy3" Content="Edit Item" Margin="10,0,10,10" Height="34.392" VerticalAlignment="Bottom" d:LayoutOverrides="HorizontalAlignment" Visibility="Hidden"/>
-                <Button x:Name="View_All_Users1" Margin="10,0,10,49.392" Content="View All Items" Height="33.797" VerticalAlignment="Bottom" Visibility="Hidden"/>
+                <Button x:Name="bt_add_item" Content="Add Item" Margin="10,10,10,0" Height="34.392" VerticalAlignment="Top" d:LayoutOverrides="HorizontalAlignment"/>
             </Grid>
         </GroupBox>
 

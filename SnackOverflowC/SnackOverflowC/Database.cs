@@ -178,7 +178,8 @@ namespace SnackOverflowC
             {
                 using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid", conn))
                 {
-                    cmd.Parameters.Add(new NpgsqlParameter("balance", balance - amount));
+                    double toBePulled = Math.Round(balance - amount, 2, MidpointRounding.AwayFromZero);
+                    cmd.Parameters.Add(new NpgsqlParameter("balance", toBePulled));
                     cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
                     cmd.ExecuteNonQuery();
                 }
@@ -224,7 +225,8 @@ namespace SnackOverflowC
             {
                 using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid", conn))
                 {
-                    cmd.Parameters.Add(new NpgsqlParameter("balance", balance + amount));
+                    double toBeAdded = Math.Round(balance + amount, 2, MidpointRounding.AwayFromZero);
+                    cmd.Parameters.Add(new NpgsqlParameter("balance", toBeAdded));
                     cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
                     cmd.ExecuteNonQuery();
                 }
@@ -281,6 +283,30 @@ namespace SnackOverflowC
                 return;
             }
         
+        }
+
+
+        public void addItem(Item item)
+        {
+            try
+            {
+                using (var cmd = new NpgsqlCommand("INSERT INTO items (upc,name,alias,price,color) VALUES (@upc,@name,@alias,@price,@color)", conn))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("upc", item.upc));
+                    cmd.Parameters.Add(new NpgsqlParameter("name", item.name));
+                    cmd.Parameters.Add(new NpgsqlParameter("alias", item.alias));
+                    cmd.Parameters.Add(new NpgsqlParameter("price", item.price));
+                    cmd.Parameters.Add(new NpgsqlParameter("color", string.Format("{0},{1},{2}",item.color[0], item.color[1], item.color[2])));
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error adding item");
+                return;
+            }
+
         }
     }
 }

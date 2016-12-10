@@ -14,5 +14,6 @@ namespace SnackOverflowC
         public string alias;
         public double price;
         public byte[] color;
+        public bool error;
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AdminTool"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Class="AdminTool.AddBalanceWindow"
         mc:Ignorable="d"
-        Title="AddBalanceWindow" Height="300" Width="300" Topmost="True" ResizeMode="NoResize">
+        Title="Add Balance" Height="300" Width="300" Topmost="True" ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>

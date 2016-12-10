@@ -30,7 +30,7 @@ namespace AdminTool
             InitializeComponent();
             db = new SnackOverflowC.Database();
 
-            if (!db.checkDB())
+            if (!db.openDB())
             {
                 MessageBox.Show("Error opening database");
                 this.Close();
