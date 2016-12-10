@@ -13,5 +13,6 @@ namespace SnackOverflowC
         public double balance;
         public string rfid;
         public string picturegroup;
+        public bool error;
     }
 }

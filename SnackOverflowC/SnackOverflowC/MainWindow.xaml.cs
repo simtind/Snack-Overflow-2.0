@@ -72,7 +72,7 @@ namespace SnackOverflowC
             cartTimer.TimeChanged += cartTimer_TimeChanged;
             overlayTimer.ThresholdReached += overlayTimer_ThresholdReached;
 
-            if (!db.checkDB())
+            if (!db.openDB())
             {
                 MessageBox.Show("Error connecting to database");
                 Environment.Exit(0);
@@ -166,15 +166,13 @@ namespace SnackOverflowC
                 //put all of this in a try catch to prevent db issues
                 //notify user if purchase didnt go through
                 //TODO: Put the overlay in new class. this is atrocious.
-
-                
-
-                
                 user = db.getUser(rfid);
-                if(user.balance-cart.total<0)
+                if (user.balance - cart.total < 0)
                 {
                     MessageBox.Show("Insufficient funds");
                 }
+                else if (user.error == true)
+                    MessageBox.Show("Error fetching user");
                 else
                 {
                     overlayTimer.stopTimer();

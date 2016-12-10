@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+
 
 namespace SnackOverflowC
 {
@@ -17,7 +19,7 @@ namespace SnackOverflowC
             conn = new NpgsqlConnection("Host=127.0.0.1;Port=5432;Username=postgres;Password=admin;Database=snackoverflow");
         }
 
-        public bool checkDB()
+        public bool openDB()
         {
             try
             {
@@ -72,78 +74,119 @@ namespace SnackOverflowC
         public User getUser(string rfid)
         {
             User user = new User();
-            using (var cmd = new NpgsqlCommand("SELECT name,balance,username,picture FROM students WHERE rfid = @rfid", conn))
-            {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                using (var reader = cmd.ExecuteReader())
+            user.error = false;
+            try {
+                using (var cmd = new NpgsqlCommand("SELECT name,balance,username,picture FROM students WHERE rfid = @rfid", conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        user.name = reader.GetString(0);
-                        user.balance = reader.GetDouble(1);
-                        user.username = reader.GetString(2);
-                        user.picturegroup = reader.GetString(3);
-                        user.rfid = rfid;
+                        while (reader.Read())
+                        {
+                            user.name = reader.GetString(0);
+                            user.balance = reader.GetDouble(1);
+                            user.username = reader.GetString(2);
+                            user.picturegroup = reader.GetString(3);
+                            user.rfid = rfid;
+                        }
                     }
                 }
+                return user;
             }
-            return user;
+            catch(Exception e)
+            {
+                MessageBox.Show("Critical error fetching user. Contact administrator immediately");
+                user.error = true;
+                return user;
+            }
         }
 
         public bool itemExists(string upc)
         {
-            using (var cmd = new NpgsqlCommand("SELECT EXISTS(SELECT upc FROM items WHERE upc = @upc)", conn))
-            {
-                cmd.Parameters.Add(new NpgsqlParameter("upc", upc));
-                using (var reader = cmd.ExecuteReader())
+            try {
+                using (var cmd = new NpgsqlCommand("SELECT EXISTS(SELECT upc FROM items WHERE upc = @upc)", conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add(new NpgsqlParameter("upc", upc));
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return reader.GetBoolean(0);
+                        while (reader.Read())
+                        {
+                            return reader.GetBoolean(0);
+                        }
                     }
                 }
+                return false;
             }
-            return false;
+            catch(Exception e){
+                MessageBox.Show("Error checking existence of item");
+                return false;
+            }
         }
 
         public bool userExists(string rfid)
         {
-            using (var cmd = new NpgsqlCommand("SELECT EXISTS(SELECT rfid FROM students WHERE rfid = @rfid)", conn))
+            try
             {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                using (var reader = cmd.ExecuteReader())
+                using (var cmd = new NpgsqlCommand("SELECT EXISTS(SELECT rfid FROM students WHERE rfid = @rfid)", conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        return reader.GetBoolean(0);
+                        while (reader.Read())
+                        {
+                            return reader.GetBoolean(0);
+                        }
                     }
                 }
+                return false;
             }
-            return false;
+            catch (Exception e)
+            {
+                MessageBox.Show("Error checking existence of user");
+                return false;
+            }
         }
 
         public void pullBalance(string rfid, double amount)
         {
             amount = Math.Abs(amount);
             double balance = 0;
-            using (var cmd = new NpgsqlCommand("SELECT balance FROM students WHERE rfid = @rfid", conn))
-            {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        balance = reader.GetDouble(0);
 
+            try
+            {
+                using (var cmd = new NpgsqlCommand("SELECT balance FROM students WHERE rfid = @rfid", conn))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            balance = reader.GetDouble(0);
+
+                        }
                     }
                 }
             }
-
-            using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid",conn))
+            catch (Exception e)
             {
-                cmd.Parameters.Add(new NpgsqlParameter("balance", balance-amount));
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                cmd.ExecuteNonQuery();
+                MessageBox.Show("Error fetching balance. Your balance is unaffected");
+                return;
+            }
+
+
+            try
+            {
+                using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid", conn))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("balance", balance - amount));
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error pulling balance from account. Your balance is unaffected");
+                return;
             }
 
 
@@ -153,57 +196,91 @@ namespace SnackOverflowC
         {
             amount = Math.Abs(amount);
             double balance = 0;
-            using (var cmd = new NpgsqlCommand("SELECT balance FROM students WHERE rfid = @rfid", conn))
+            try
             {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                using (var reader = cmd.ExecuteReader())
+                using (var cmd = new NpgsqlCommand("SELECT balance FROM students WHERE rfid = @rfid", conn))
                 {
-                    while (reader.Read())
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        balance = reader.GetDouble(0);
+                        while (reader.Read())
+                        {
+                            balance = reader.GetDouble(0);
 
+                        }
                     }
                 }
             }
-
-            using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid", conn))
+            catch (Exception e)
             {
-                cmd.Parameters.Add(new NpgsqlParameter("balance", balance + amount));
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
-                cmd.ExecuteNonQuery();
+                MessageBox.Show("Error fetching balance. Your balance is unaffected");
+                return;
             }
 
+
+
+
+            try
+            {
+                using (var cmd = new NpgsqlCommand("UPDATE students SET (balance) = (@balance) WHERE rfid = @rfid", conn))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("balance", balance + amount));
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", rfid));
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error adding balance. Your balance is unaffected");
+                return;
+            }
 
         }
 
         public List<string> getPictureGroups()
         {
             List<string> list = new List<string>();
-            using (var cmd = new NpgsqlCommand("SELECT * FROM PICTUREGROUPS", conn))
+            try
             {
-                using (var reader = cmd.ExecuteReader())
+                using (var cmd = new NpgsqlCommand("SELECT * FROM PICTUREGROUPS", conn))
                 {
-                    while (reader.Read())
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        list.Add(reader.GetString(0));
+                        while (reader.Read())
+                        {
+                            list.Add(reader.GetString(0));
+                        }
                     }
                 }
+                return list;
             }
-            return list;
+            catch (Exception e)
+            {
+                MessageBox.Show("Error fetching picture groups");
+                return list;
+            }
         } 
 
         public void addUser(User user)
         {
-            using (var cmd = new NpgsqlCommand("INSERT INTO students (rfid,name,balance,picture,username) VALUES (@rfid,@name,@balance,@picture,@username)", conn))
-            {
-                cmd.Parameters.Add(new NpgsqlParameter("rfid", user.rfid));
-                cmd.Parameters.Add(new NpgsqlParameter("name", user.name));
-                cmd.Parameters.Add(new NpgsqlParameter("username", user.username));
-                cmd.Parameters.Add(new NpgsqlParameter("balance", user.balance));
-                cmd.Parameters.Add(new NpgsqlParameter("picture", user.picturegroup));
+            try {
+                using (var cmd = new NpgsqlCommand("INSERT INTO students (rfid,name,balance,picture,username) VALUES (@rfid,@name,@balance,@picture,@username)", conn))
+                {
+                    cmd.Parameters.Add(new NpgsqlParameter("rfid", user.rfid));
+                    cmd.Parameters.Add(new NpgsqlParameter("name", user.name));
+                    cmd.Parameters.Add(new NpgsqlParameter("username", user.username));
+                    cmd.Parameters.Add(new NpgsqlParameter("balance", user.balance));
+                    cmd.Parameters.Add(new NpgsqlParameter("picture", user.picturegroup));
 
-                cmd.ExecuteNonQuery();
+                    cmd.ExecuteNonQuery();
+                }
+            } 
+            catch (Exception e)
+            {
+                MessageBox.Show("Error adding user. Your balance is unaffected");
+                return;
             }
+        
         }
     }
 }

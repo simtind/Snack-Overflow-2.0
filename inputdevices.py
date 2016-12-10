@@ -25,7 +25,7 @@ def handleBarcodeReader():
 
 def handleRFIDReader():
 
-    ser = serial.Serial('COM3', 9600)
+    ser = serial.Serial('COM6', 9600)
     line = b''
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
