@@ -63,10 +63,16 @@ namespace SnackOverflowC
             cart = new Cart();
             cartTimer = new ResetTimer(15);
             overlayTimer = new ResetTimer(5);
+
+            dir = Assembly.GetExecutingAssembly().Location;
+            dir = dir.Replace(dir.Split('\\').Last(), "");
+            try
+            {
+                logo.Source = new BitmapImage(new Uri(dir + @"img\logo.png"));
+            }
+            catch{}
             //dir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.G‌​etCurrentProcess().M‌​ainModule.FileName);
             //logo.Source = new BitmapImage(new Uri(string.Format("{0}/img/logo2.jpg",dir)));
-            dir = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.G‌​etCurrentProcess().M‌​ainModule.FileName);
-            logo.Source = new BitmapImage(new Uri(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\logo.jpg"));
 
             cartTimer.ThresholdReached += cartTimer_ThresholdReached;
             cartTimer.TimeChanged += cartTimer_TimeChanged;
@@ -221,10 +227,19 @@ namespace SnackOverflowC
 
         void changeOverlayPicture(string picturegroup)
         {
-            int fCount = Directory.EnumerateFiles(string.Format(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\{0}", picturegroup), "*.png", SearchOption.AllDirectories).Count();
-            Random rnd = new Random();
-            int rand = rnd.Next(1, fCount+1);
-            p_image.Source = new BitmapImage(new Uri(string.Format(@"C:\Users\Jakob Lover\Documents\GitHub\Snack-Overflow-2.0\SnackOverflowC\SnackOverflowC\img\{0}\{1}.png",picturegroup,rand)));
+            try
+            {
+
+
+                int fCount = Directory.EnumerateFiles(string.Format(dir + @"img\{0}", picturegroup), "*.png", SearchOption.AllDirectories).Count();
+                Random rnd = new Random();
+                int rand = rnd.Next(1, fCount + 1);
+                p_image.Source = new BitmapImage(new Uri(string.Format(dir + @"img\{0}\{1}.png", picturegroup, rand)));
+            }
+            catch
+            {
+                MessageBox.Show("Failure parsing pictures");
+            }
         }
         #endregion
 

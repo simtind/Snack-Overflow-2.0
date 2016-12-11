@@ -1,0 +1,22 @@
+Admin Tool
+---------------
+Make sure Snack Overflow is closed. Do not open the admin tool without closing Snack Overflow first
+
+
+Snack Overflow
+---------------
+
+To add new pictures, make sure it's a correctly numbered .png, and it is added to /img/XXXX/your_picture.png where XXXX is the picture series you want to add the picture to
+To add a new picture to the startup screen, add a logo.png file to the "img" folder
+
+
+
+
+
+
+If no RFID or barcode is being registered, follow the following steps:
+
+1. Check if the barcode scanner and RFID scanner are properly powered up
+2. Restart Snack Overflow
+
+If none of this works, ctrl+alt+delete and close down python.exe, then restart Snack Overflow

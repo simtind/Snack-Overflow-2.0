@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 
 namespace SnackOverflowC
 {
@@ -77,17 +78,20 @@ namespace SnackOverflowC
 
         public void recordPurchase(User user)
         {
+            string dir = Assembly.GetExecutingAssembly().Location;
+            dir = dir.Replace(dir.Split('\\').Last(), "");
             try
             {
 
 
                 using (System.IO.StreamWriter file =
-                    new System.IO.StreamWriter(string.Format("C:/Users/Jakob Lover/Desktop/{0}.csv", DateTime.Now.ToString("MMMM yy")), true))
+                    new System.IO.StreamWriter(string.Format(dir + "reports/{0}.csv", DateTime.Now.ToString("MMMM yy")), true))
                 {
                     foreach (var item in cart)
                     {
                         file.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", DateTime.Now.ToString("dd MMM"), DateTime.Now.ToString("HH:mm:ss"), user.name, user.username, item.upc, item.name, item.price));
                     }
+                    file.WriteLine(string.Format(",,,,,,,{0}",user.balance));
                 }
             }
             catch
