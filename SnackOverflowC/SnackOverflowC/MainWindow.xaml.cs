@@ -238,7 +238,6 @@ namespace SnackOverflowC
             }
             catch
             {
-                MessageBox.Show("Failure parsing pictures");
             }
         }
         #endregion
