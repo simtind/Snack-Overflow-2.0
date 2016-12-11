@@ -75,6 +75,25 @@ namespace SnackOverflowC
 
         }
 
+        public void recordPurchase(User user)
+        {
+            try
+            {
 
+
+                using (System.IO.StreamWriter file =
+                    new System.IO.StreamWriter(string.Format("C:/Users/Jakob Lover/Desktop/{0}.csv", DateTime.Now.ToString("MMMM yy")), true))
+                {
+                    foreach (var item in cart)
+                    {
+                        file.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", DateTime.Now.ToString("dd MMM"), DateTime.Now.ToString("HH:mm:ss"), user.name, user.username, item.upc, item.name, item.price));
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Purchase was drawn from account, but not recorded. Contact admin!");
+            }
+        }
     }
 }

@@ -191,6 +191,8 @@ namespace SnackOverflowC
 
                     changeOverlayPicture(user.picturegroup);
                     changeGrid(grid_purchase);
+
+                    cart.recordPurchase(user);
                     cart.clearCart(ref sp_items, ref tb_total);
                 }
                 
