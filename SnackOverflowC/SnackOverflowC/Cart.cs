@@ -78,25 +78,28 @@ namespace SnackOverflowC
 
         public void recordPurchase(User user)
         {
-            string dir = Assembly.GetExecutingAssembly().Location;
-            dir = dir.Replace(dir.Split('\\').Last(), "");
-            try
+            if (cart.Count != 0)
             {
-
-
-                using (System.IO.StreamWriter file =
-                    new System.IO.StreamWriter(string.Format(dir + "reports/{0}.csv", DateTime.Now.ToString("MMMM yy")), true))
+                string dir = Assembly.GetExecutingAssembly().Location;
+                dir = dir.Replace(dir.Split('\\').Last(), "");
+                try
                 {
-                    foreach (var item in cart)
+
+
+                    using (System.IO.StreamWriter file =
+                        new System.IO.StreamWriter(string.Format(dir + "reports/{0}.csv", DateTime.Now.ToString("MMMM yy")), true))
                     {
-                        file.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", DateTime.Now.ToString("dd MMM"), DateTime.Now.ToString("HH:mm:ss"), user.name, user.username, item.upc, item.name, item.price));
+                        foreach (var item in cart)
+                        {
+                            file.WriteLine(string.Format("{0},{1},{2},{3},{4},{5},{6}", DateTime.Now.ToString("dd MMM"), DateTime.Now.ToString("HH:mm:ss"), user.name, user.username, item.upc, item.name, item.price));
+                        }
+                        file.WriteLine(string.Format(",,{0},,,,,{1}", user.name,user.balance));
                     }
-                    file.WriteLine(string.Format(",,,,,,,{0}",user.balance));
                 }
-            }
-            catch
-            {
-                MessageBox.Show("Purchase was drawn from account, but not recorded. Contact admin!");
+                catch
+                {
+                    MessageBox.Show("Purchase was drawn from account, but not recorded. Contact admin!");
+                }
             }
         }
     }

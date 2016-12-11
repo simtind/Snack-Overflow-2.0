@@ -32,7 +32,6 @@ def handleBarcodeReader():
             os._exit(1)
         if c == b'\r' or c == b'\n':
             sock.sendto('[BARCODE] %s' % line.decode('utf-8'), ("127.0.0.1", 25565))
-            print('[BARCODE] %s' % line.decode('utf-8'))
             sys.stdout.flush()
             line = b''
         else:
@@ -62,7 +61,6 @@ def handleRFIDReader():
             os._exit(1)
         if c == b'\r' or c == b'\n':
             sock.sendto('[RFID] %s' % line.decode('utf-8'), ("127.0.0.1", 25565))
-            print('[RFID] %s' % line.decode('utf-8'))
             sys.stdout.flush()
             line = b''
         else:
